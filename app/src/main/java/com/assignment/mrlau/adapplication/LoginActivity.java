@@ -68,6 +68,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupActionBar();
+        getSupportActionBar().setHomeButtonEnabled(false);      // Disable the button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false); // Remove the left caret
+        getSupportActionBar().setDisplayShowHomeEnabled(false); // Remove the icon
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
