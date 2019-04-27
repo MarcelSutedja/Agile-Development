@@ -19,4 +19,11 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_signup">SignupActivity</string>
+    <string name="minimum_password">Your password must contain at least 6 characters</string>
+    <string name="auth_failed">Invalid Username and/or password</string>
+    <string name="hint_email">Email</string>
+    <string name="btn_reset_password">Reset Password</string>
+    <string name="forgot_password_msg">We will require your email address to reset your password</string>
+    <string name="loading">Loading</string>
 </resources>
