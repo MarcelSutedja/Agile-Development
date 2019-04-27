@@ -1,9 +1,5 @@
 package com.assignment.mrlau.adapplication;
 
-/**
- * Created by Poncoe on 01/02/17.
- */
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
