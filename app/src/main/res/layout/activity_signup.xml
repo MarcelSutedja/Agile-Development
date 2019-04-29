@@ -17,6 +17,25 @@
         android:padding="@dimen/activity_horizontal_margin">
 
 
+        <EditText
+            android:id="@+id/editText_Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter Name"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView_Sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Male or Female"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinner_Sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -52,6 +71,35 @@
                 android:textColor="@android:color/black" />
 
         </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView_Diploma"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Your Diploma"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/spinner_Course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Choose your Course"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textview_Time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FT or PT"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/spinner_Time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/sign_up_button"

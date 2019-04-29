@@ -111,34 +111,31 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getFragmentManager();
         if (id == R.id.nav_logout){
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage("Confirm Logout").setCancelable(true)
-                    // (true) dialog can be ignored by pressing the back button
-                    // jika pilih yess
-                    .setPositiveButton("Logout",
+            builder.setMessage("Confirm Logout").setCancelable(true)     // (true) dialog can be ignored by pressing the back button
+                    .setPositiveButton("Logout",                    // Confirm Logout
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     signOut();
                                 }
                             })
-                    // jika pilih no
-                    .setNegativeButton("Back",
+                    .setNegativeButton("Back",                      // Cancel Logout
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
                                 }
                             }).show();
         }
-        else if (id == R.id.nav_first_layout) {
+        else if (id == R.id.nav_first_layout) {                          // Go to First Fragment
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame
                             , new FirstFragment())
                     .commit();
-        } else if (id == R.id.nav_second_layout) {
+        } else if (id == R.id.nav_second_layout) {                      // Go to Second Fragment
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame
                             , new SecondFragment())
                     .commit();
-        } else if (id == R.id.nav_third_layout) {
+        } else if (id == R.id.nav_third_layout) {                       // Go to Third Fragment
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame
                             , new ThirdFragment())
@@ -154,7 +151,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
     //sign out method
-    public void signOut() {
+    public void signOut() {                                                     //Logout
         auth.signOut();
     }
     @Override
@@ -171,6 +168,4 @@ public class MainActivity extends AppCompatActivity
         super.onStart();
         auth.addAuthStateListener(authListener);
     }
-
-
 }

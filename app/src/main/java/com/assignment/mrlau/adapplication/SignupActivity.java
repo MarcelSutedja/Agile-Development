@@ -15,9 +15,11 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,11 +29,15 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SignupActivity extends Activity {
 
+    private Spinner course_Drop_Down;
+    private Spinner FPTime_Drop_Down;
+    private Spinner sex_Drop_Down;
     private EditText inputEmail, inputPassword;
     private Button btnSignUp;
     private ProgressBar progressBar;
     private ProgressDialog mProgressDialog;
     private FirebaseAuth auth;
+    public String diploma_Course;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +48,27 @@ public class SignupActivity extends Activity {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
+        sex_Drop_Down = (Spinner)findViewById(R.id.spinner_Sex);
+        FPTime_Drop_Down = (Spinner)findViewById(R.id.spinner_Time);
+        course_Drop_Down = (Spinner) findViewById(R.id.spinner_Course);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        //Configure and display Drop Down Menu for Diploma Course Selection In Registration
+        ArrayAdapter<String> course_Adaptor = new ArrayAdapter<String>(SignupActivity.this,android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.courses));
+        course_Adaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        course_Drop_Down.setAdapter(course_Adaptor);
+
+        //Configure and display Drop Down Menu for Full Time or Part Time
+        ArrayAdapter<String> time_Adaptor = new ArrayAdapter<String>(SignupActivity.this,android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.time));
+        time_Adaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        FPTime_Drop_Down.setAdapter(time_Adaptor);
+        //Configure and display Drop Down Menu for Full Time or Part Time
+        ArrayAdapter<String> sex_Adaptor = new ArrayAdapter<String>(SignupActivity.this,android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.sex));
+        sex_Adaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sex_Drop_Down.setAdapter(sex_Adaptor);
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +109,7 @@ public class SignupActivity extends Activity {
                                 } else {
                                     showProgressDialog();
                                     startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                                    diploma_Course = course_Drop_Down.getSelectedItem().toString();
                                     finish();
                                 }
                             }
