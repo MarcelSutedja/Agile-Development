@@ -1,8 +1,12 @@
 package com.assignment.mrlau.adapplication;
 
-import android.app.Fragment;
+
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -14,16 +18,39 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private static final String TAG = "MainActivity";
+    private FirebaseAuth.AuthStateListener authListener;
+    private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //get firebase auth instance
+        auth = FirebaseAuth.getInstance();
+
+        //get current user
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) {
+                    // user auth state is changed - user is null
+                    // launch login activity
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        };
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,8 +109,26 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         FragmentManager fragmentManager = getFragmentManager();
-
-        if (id == R.id.nav_first_layout) {
+        if (id == R.id.nav_logout){
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("Confirm Logout").setCancelable(true)
+                    // (true) dialog can be ignored by pressing the back button
+                    // jika pilih yess
+                    .setPositiveButton("Logout",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    signOut();
+                                }
+                            })
+                    // jika pilih no
+                    .setNegativeButton("Back",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            }).show();
+        }
+        else if (id == R.id.nav_first_layout) {
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame
                             , new FirstFragment())
@@ -108,4 +153,24 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    //sign out method
+    public void signOut() {
+        auth.signOut();
+    }
+    @Override
+    protected void onStop() {
+
+        super.onStop();
+        if (authListener != null) {
+            auth.removeAuthStateListener(authListener);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(authListener);
+    }
+
+
 }

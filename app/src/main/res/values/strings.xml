@@ -7,6 +7,37 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">Sign in</string>
+    //Strings for Diploma Course Drop-Down Menu (spinner)
+    <string-array name="courses">
+        <item>Diploma in Business Administration</item>
+        <item>Diploma in Business Administration (Accounting and Finance)</item>
+        <item>Diploma in Business Administration (Digital Marketing)</item>
+        <item>Diploma in Business Administration (Human Resource Management)</item>
+        <item>Diploma in Business Administration (Supply Chain Management)</item>
+        <item>Diploma in Business Electrical Engineering Technology</item>
+        <item>Diploma in Business Global Hospitality Management</item>
+        <item>Diploma in Business Global Supply Chain Management</item>
+        <item>Diploma in Business Infocomm Technology</item>
+        <item>Diploma in Business Mechanical Engineering Technology</item>
+        <item>Diploma in Business Media and Communications</item>
+        <item>Diploma in Network Defence and Forensic Countermeasures</item>
+        <item>Diploma in Sport and Exercise Sciences</item>
+        <item>Diploma in Sport and Exercise Sciences (Exercise and Fitness)</item>
+        <item>Diploma in Sport and Exercise Sciences (Sport Coaching)</item>
+        <item>Diploma in Business Sport and Leisure Management</item>
+        <item>Diploma in Business Tourism and Hospitality Management</item>
+        <item>Diploma in Life Sciences</item>
+    </string-array>
+    //Strings for Full time or Part time Drop down Menu in Registration
+    <string-array name="time">
+        <item>Full-Time</item>
+        <item>Part-Time</item>
+    </string-array>
+    //Strings for Choosing Sex in Registration
+    <string-array name="sex">
+        <item>Female</item>
+        <item>Male</item>
+    </string-array>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -19,4 +50,11 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_signup">SignupActivity</string>
+    <string name="minimum_password">Your password must contain at least 6 characters</string>
+    <string name="auth_failed">Invalid Username and/or password</string>
+    <string name="hint_email">Email</string>
+    <string name="btn_reset_password">Reset Password</string>
+    <string name="forgot_password_msg">We will require your email address to reset your password</string>
+    <string name="loading">Loading</string>
 </resources>
