@@ -10,12 +10,12 @@
             android:title="Logout" />
         <item
             android:id="@+id/nav_first_layout"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="First Layout" />
+            android:icon="@drawable/ic_image_black_24dp"
+            android:title="Class Timetable" />
         <item
             android:id="@+id/nav_second_layout"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Second Layout" />
+            android:icon="@drawable/ic_keyboard_black_24dp"
+            android:title="GPA Calculator" />
         <item
             android:id="@+id/nav_third_layout"
             android:icon="@drawable/ic_menu_slideshow"

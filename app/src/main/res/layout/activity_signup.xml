@@ -77,7 +77,7 @@
             android:id="@+id/textView_Diploma"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Your Diploma"
+            android:text="Select Your Course"
             android:textAlignment="center"
             android:textSize="20sp" />
 

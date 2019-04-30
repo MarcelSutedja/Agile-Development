@@ -9,24 +9,16 @@
     <string name="title_activity_login">Sign in</string>
     //Strings for Diploma Course Drop-Down Menu (spinner)
     <string-array name="courses">
-        <item>Diploma in Business Administration</item>
-        <item>Diploma in Business Administration (Accounting and Finance)</item>
-        <item>Diploma in Business Administration (Digital Marketing)</item>
-        <item>Diploma in Business Administration (Human Resource Management)</item>
-        <item>Diploma in Business Administration (Supply Chain Management)</item>
-        <item>Diploma in Business Electrical Engineering Technology</item>
-        <item>Diploma in Business Global Hospitality Management</item>
-        <item>Diploma in Business Global Supply Chain Management</item>
-        <item>Diploma in Business Infocomm Technology</item>
-        <item>Diploma in Business Mechanical Engineering Technology</item>
-        <item>Diploma in Business Media and Communications</item>
-        <item>Diploma in Network Defence and Forensic Countermeasures</item>
-        <item>Diploma in Sport and Exercise Sciences</item>
-        <item>Diploma in Sport and Exercise Sciences (Exercise and Fitness)</item>
-        <item>Diploma in Sport and Exercise Sciences (Sport Coaching)</item>
-        <item>Diploma in Business Sport and Leisure Management</item>
-        <item>Diploma in Business Tourism and Hospitality Management</item>
-        <item>Diploma in Life Sciences</item>
+        <item>Bachelor of Arts with Honours in Accounting and Finance</item>
+        <item>Bachelor of Arts with Honours in Business and Finance</item>
+        <item>Bachelor of Arts with Honours in Business and Marketing</item>
+        <item>Bachelor of Arts with Honours in Media and Communications</item>
+        <item>Bachelor of Engineering with Honours in Electrical and Electronic Engineering</item>
+        <item>Bachelor of Engineering with Honours in Mechanical Engineering</item>
+        <item>Bachelor of Science with Honours in Computer Science</item>
+        <item>Bachelor of Science with Honours in Ethical Hacking and Cybersecurity</item>
+        <item>Bachelor of Science with Honours in Global Logistics (Top-up)</item>
+
     </string-array>
     //Strings for Full time or Part time Drop down Menu in Registration
     <string-array name="time">
