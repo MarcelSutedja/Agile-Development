@@ -1,19 +1,13 @@
 package com.assignment.mrlau.adapplication;
 
-import android.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-/**
- * Created by user on 12/31/15.
- */
-public class SecondFragment extends Fragment {
+public class GPACalc extends AppCompatActivity {
     public TextView result;
     public Button buttonCalc;
     double totalGPA=0;
@@ -30,14 +24,15 @@ public class SecondFragment extends Fragment {
     public EditText examPercentage;
     public EditText creditModule;
 
-    View myView;
-
-    @Nullable
+    private static final String LOG_TAG = "MainActivity";
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.second_layout, container, false);
-        result = (TextView)getView().findViewById(R.id.result);
-        buttonCalc = (Button) getView().findViewById(R.id.buttonCalc);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_gpacalc);
+
+        //variables
+        result = (TextView) findViewById(R.id.result);
+        buttonCalc = (Button) findViewById(R.id.buttonCalc);
 
         //arrays of editText(s)
         final int[] creditList = new int[] {R.id.editTextModuleCredit1,R.id.editTextModuleCredit2};
@@ -48,18 +43,17 @@ public class SecondFragment extends Fragment {
         buttonCalc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //clearing the data
-                totalGPA =0;
-                totalCredit =0;
+                totalGPA = 0;
+                totalCredit = 0;
                 for (int i=0; i<creditList.length;i++) {
                     //declaring the variables
-                    examGrade = (EditText) getView().findViewById(gradeList[i]);
+                    examGrade = (EditText) findViewById(gradeList[i]);
                     double grade = Double.parseDouble(examGrade.getText().toString());
-                    cwGrade = (EditText) getView().findViewById(cwgradeList[i]);
+                    cwGrade = (EditText) findViewById(cwgradeList[i]);
                     double cwgrade = Double.parseDouble(cwGrade.getText().toString());
-                    examPercentage = (EditText) getView().findViewById(percentageList[i]);
+                    examPercentage = (EditText) findViewById(percentageList[i]);
                     double exampercentage = Double.parseDouble(examPercentage.getText().toString());
-                    creditModule = (EditText) getView().findViewById(creditList[i]);
+                    creditModule = (EditText) findViewById(creditList[i]);
                     double credit = Double.parseDouble(creditModule.getText().toString());
 
                     double examPercentage = exampercentage;
@@ -88,7 +82,5 @@ public class SecondFragment extends Fragment {
                 }
             }
         });
-        return myView;
-
     }
 }

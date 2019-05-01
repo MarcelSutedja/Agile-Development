@@ -134,10 +134,8 @@ public class MainActivity extends AppCompatActivity
                             , new FirstFragment())
                     .commit();
         } else if (id == R.id.nav_second_layout) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame
-                            , new SecondFragment())
-                    .commit();
+            Intent intent = new Intent(getApplicationContext(), GPACalc.class);
+            startActivity(intent);
         } else if (id == R.id.nav_third_layout) {
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame
