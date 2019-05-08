@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //get firebase auth instance
+        //Get firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-        //get current user
+        //Get current user
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         authListener = new FirebaseAuth.AuthStateListener() {
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    //Navigational Drawer
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

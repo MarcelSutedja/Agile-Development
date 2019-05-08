@@ -4,22 +4,19 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item android:title="Important">
-            <menu>
-                <item
-                    android:id="@+id/nav_first_layout"
-                    android:icon="@drawable/ic_image_black_24dp"
-                    android:title="Class Timetable" />
-                <item
-                    android:id="@+id/nav_second_layout"
-                    android:icon="@drawable/ic_keyboard_black_24dp"
-                    android:title="GPA Calculator" />
-                <item
-                    android:id="@+id/nav_third_layout"
-                    android:icon="@drawable/ic_menu_slideshow"
-                    android:title="Third Layout" />
-            </menu>
-        </item>
+        <item
+            android:id="@+id/nav_first_layout"
+            android:icon="@drawable/ic_image_black_24dp"
+            android:title="Class Timetable" />
+        <item
+            android:id="@+id/nav_second_layout"
+            android:icon="@drawable/ic_keyboard_black_24dp"
+            android:title="GPA Calculator" />
+        <item
+            android:id="@+id/nav_third_layout"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Third Layout" />
+
         <item android:title="Other">
             <menu>
                 <item
