@@ -1,6 +1,7 @@
 package com.example.schoolapp.Adaptor;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.schoolapp.Body.User;
+import com.example.schoolapp.MessageActivity;
 import com.example.schoolapp.R;
 
 import java.util.List;
@@ -33,15 +35,22 @@ public class UserAdaptor extends RecyclerView.Adapter<UserAdaptor.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        User users = mUsers.get(i);
+        final User users = mUsers.get(i);
         viewHolder.student_Name.setText(users.getName());
         if (users.getImageURL().equals("default")){
             viewHolder.profile_Image.setImageResource(R.mipmap.ic_launcher);
         }else{
             Glide.with(mContext).load(users.getImageURL()).into(viewHolder.profile_Image);
         }
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, MessageActivity.class);
+                intent.putExtra("userid", users.getId());
+                mContext.startActivity(intent);
+            }
+        });
     }
-
 
     @Override
     public int getItemCount() {
