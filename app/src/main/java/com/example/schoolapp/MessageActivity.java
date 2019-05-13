@@ -44,6 +44,7 @@ public class MessageActivity extends AppCompatActivity {
     FirebaseUser fbUser;
     DatabaseReference dbReference;
     Intent intent;
+    ValueEventListener seenListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,14 +75,14 @@ public class MessageActivity extends AppCompatActivity {
         text_Send = findViewById(R.id.text_send);
 
         intent = getIntent();
-        final String userID = intent.getStringExtra("userid");
+        final String userid = intent.getStringExtra("userid");
 
         btn_Send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String message = text_Send.getText().toString();
                 if (!message.equals("")){
-                    sendMessage(fbUser.getUid(), userID, message);
+                    sendMessage(fbUser.getUid(), userid, message);
                 }else{
                     Toast emptyMessage = Toast.makeText(MessageActivity.this, "There is nothing to send", Toast.LENGTH_LONG);
                     emptyMessage.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 1250);
@@ -92,7 +93,7 @@ public class MessageActivity extends AppCompatActivity {
         });
 
                 fbUser = FirebaseAuth.getInstance().getCurrentUser();
-        dbReference = FirebaseDatabase.getInstance().getReference("Users").child(userID);
+        dbReference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
         dbReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -102,9 +103,31 @@ public class MessageActivity extends AppCompatActivity {
                 if (users.getImageURL().equals("default")){
                     profile_Image.setImageResource(R.mipmap.ic_launcher);
                 }else{
-                    Glide.with(MessageActivity.this).load(users.getImageURL()).into(profile_Image);
+                    Glide.with(getApplicationContext()).load(users.getImageURL()).into(profile_Image);
                 }
-                readMessages(fbUser.getUid(), userID, users.getImageURL());
+                readMessages(fbUser.getUid(), userid, users.getImageURL());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        seenMessage(userid);
+    }
+    private void seenMessage(final String userid){
+        dbReference = FirebaseDatabase.getInstance().getReference("Chats");
+        seenListener = dbReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chat chats = snapshot.getValue(Chat.class);
+                    if(chats.getReceiver().equals(fbUser.getUid())&&chats.getSender().equals(userid)){
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("isseen", true);
+                        snapshot.getRef().updateChildren(hashMap);
+                    }
+                }
             }
 
             @Override
@@ -120,6 +143,7 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("sender", sender);
         hashMap.put("receiver", receiver);
         hashMap.put("message", message);
+        hashMap.put("isseen", false);
 
         reference.child("Chats").push().setValue(hashMap);
     }
@@ -165,6 +189,7 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
+        dbReference.removeEventListener(seenListener);
         status("Offline");
     }
 }

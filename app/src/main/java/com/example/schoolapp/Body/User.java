@@ -8,7 +8,6 @@ public class User {
     private String currentStatus;
     private String search;
 
-
     public User(String id, String name, String imageURL, String currentStatus, String search){
         this.id = id;
         this.name = name;
@@ -52,7 +51,7 @@ public class User {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
-    
+
     public String getSearch() {
         return search;
     }
