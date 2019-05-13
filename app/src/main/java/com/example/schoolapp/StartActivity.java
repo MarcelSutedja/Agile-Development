@@ -38,14 +38,13 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(StartActivity.this, LoginActivity.class));
-                
+
             }
         });
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(StartActivity.this, RegisterActivity.class));
-                finish();
             }
         });
     }

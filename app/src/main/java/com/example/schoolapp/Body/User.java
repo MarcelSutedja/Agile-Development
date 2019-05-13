@@ -5,11 +5,21 @@ public class User {
     private String id;
     private String name;
     private String imageURL;
+    private String currentStatus;
 
-    public User(String id, String name, String imageURL){
+    public User(String id, String name, String imageURL, String currentStatus){
         this.id = id;
         this.name = name;
         this.imageURL = imageURL;
+        this.currentStatus = currentStatus;
+    }
+
+    public String getCurrentStatus() {
+        return currentStatus;
+    }
+
+    public void setCurrentStatus(String currentStatus) {
+        this.currentStatus = currentStatus;
     }
 
     public User(){

@@ -54,13 +54,15 @@ public class MessageActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                finish();
+
+                startActivity(new Intent(MessageActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
 
-        recyclerView = findViewById(R.id.recycler_view);
+                recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
@@ -146,5 +148,23 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void status (String status){
+        dbReference = FirebaseDatabase.getInstance().getReference("Users").child(fbUser.getUid());
+
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("Status", status);
+
+        dbReference.updateChildren(hashMap);
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        status("Online");
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        status("Offline");
     }
 }
