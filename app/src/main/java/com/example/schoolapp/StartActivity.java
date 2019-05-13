@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,6 +15,7 @@ public class StartActivity extends AppCompatActivity {
     Button login, register;
 
     FirebaseUser firebaseUser;
+    TextView forgotPassword;
 
     protected void OnStart(){
         super.onStart();
@@ -33,6 +35,14 @@ public class StartActivity extends AppCompatActivity {
 
         login = findViewById(R.id.login);
         register = findViewById(R.id.register);
+        forgotPassword = findViewById(R.id.forgot_password);
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(StartActivity.this, ResetPasswordActivity.class));
+            }
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

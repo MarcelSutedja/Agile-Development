@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Coventry University"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="180dp"
         android:textAlignment="center"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/login"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         android:background="@color/colorPrimaryDark"
         android:text="Login"
         android:textColor="@color/cardview_light_background"/>
@@ -34,5 +34,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="register" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Forgot your Password?"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:id="@+id/forgot_password"
+        android:textColor="@color/colorPrimaryDark"/>
 
 </LinearLayout>
