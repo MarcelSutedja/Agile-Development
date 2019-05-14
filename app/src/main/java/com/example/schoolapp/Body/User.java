@@ -7,13 +7,23 @@ public class User {
     private String imageURL;
     private String currentStatus;
     private String search;
+    private String timetable;
 
-    public User(String id, String name, String imageURL, String currentStatus, String search){
+    public User(String id, String name, String imageURL, String currentStatus, String search, String timetable){
         this.id = id;
         this.name = name;
         this.imageURL = imageURL;
         this.currentStatus = currentStatus;
         this.search = search;
+        this.timetable = timetable;
+    }
+
+    public String getTimetable() {
+        return timetable;
+    }
+
+    public void setTimetable(String timetable) {
+        this.timetable = timetable;
     }
 
     public String getCurrentStatus() {

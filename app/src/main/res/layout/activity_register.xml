@@ -45,6 +45,27 @@
             app:met_floatingLabel="normal"
             android:inputType="textPassword"
             android:hint="Password"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select your Course"
+            android:layout_below="@id/r_password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:id="@+id/course"
+            android:textSize="20sp"/>
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/major"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:id="@+id/spinner_major"
+            android:textSize="20sp"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

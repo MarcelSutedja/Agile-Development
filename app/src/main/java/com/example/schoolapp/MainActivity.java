@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.schoolapp.Body.User;
+import com.example.schoolapp.Extra.GlobalVar;
 import com.example.schoolapp.Fragments.ChatFragment;
 import com.example.schoolapp.Fragments.ProfileFragment;
 import com.example.schoolapp.Fragments.UserFragment;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 name.setText(user.getName());
+                GlobalVar.setData(user.getTimetable());
                 if (user.getImageURL().equals("default")){
                     profile_Image.setImageResource(R.mipmap.ic_launcher);
                 }else{

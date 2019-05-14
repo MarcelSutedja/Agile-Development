@@ -19,17 +19,22 @@ public class TimeTableActivity extends AppCompatActivity {
             switch (GlobalVar.getData()) {
                 case ("Bachelor of Arts with Honours in Accounting and Finance"): {
                     timeTable.setImageResource(R.drawable.acctandfinanc);
+                    break;
                 }
                 case ("Bachelor of Arts with Honours in Business and Marketing"): {
                     timeTable.setImageResource(R.drawable.bznmarket);
+                    break;
                 }
                 case ("Bachelor of Engineering with Honours in Mechanical Engineering"): {
                     timeTable.setImageResource(R.drawable.mecheng);
+                    break;
                 }
                 case ("Bachelor of Science with Honours in Global Logistics (Top-up)"): {
                     timeTable.setImageResource(R.drawable.globallogs);
+                    break;
                 }
                 default:
+                    break;
             }
         }else{
             Toast haveNotSetTimeTable = Toast.makeText(TimeTableActivity.this, "Please go to the Profile Page and set your Time Table First", Toast.LENGTH_LONG);

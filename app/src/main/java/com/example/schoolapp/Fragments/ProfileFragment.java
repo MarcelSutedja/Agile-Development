@@ -11,9 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,11 +44,10 @@ public class ProfileFragment extends Fragment {
 
 
     CircleImageView image_Profile;
-    TextView name;
+    TextView name, major;
 
     DatabaseReference dbReference;
     FirebaseUser fbUser;
-    Spinner courseDropDown;
     FirebaseUser firebaseUser;
 
     StorageReference storageReference;
@@ -66,23 +62,8 @@ public class ProfileFragment extends Fragment {
 
         image_Profile = view.findViewById(R.id.profile_image);
         name = view.findViewById(R.id.name);
-        courseDropDown = (Spinner) view.findViewById(R.id.spinner_major);
-        //Configure and display Drop Down Menu for Diploma Course Selection In Registration
-        ArrayAdapter<String> course_Adaptor = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.courses));
-        course_Adaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        courseDropDown.setAdapter(course_Adaptor);
-        courseDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String text = courseDropDown.getSelectedItem().toString();
-                GlobalVar.setData(text);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        major = view.findViewById(R.id.major);
+        major.setText(GlobalVar.getData());
 
 
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
