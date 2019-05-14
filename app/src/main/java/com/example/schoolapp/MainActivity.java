@@ -125,7 +125,10 @@ public class MainActivity extends AppCompatActivity {
             return true;
             case R.id.gpa_calc:{
                 startActivity(new Intent(MainActivity.this, GpaCalcActivity.class));
-
+            }
+            return true;
+            case R.id.time_table:{
+                startActivity(new Intent(MainActivity.this, TimeTableActivity.class));
             }
             return true;
         }
