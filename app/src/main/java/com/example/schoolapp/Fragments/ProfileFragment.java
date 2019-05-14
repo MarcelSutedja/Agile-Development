@@ -11,11 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.schoolapp.Body.User;
+import com.example.schoolapp.Extra.GlobalVar;
 import com.example.schoolapp.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,6 +51,8 @@ public class ProfileFragment extends Fragment {
 
     DatabaseReference dbReference;
     FirebaseUser fbUser;
+    Spinner courseDropDown;
+    FirebaseUser firebaseUser;
 
     StorageReference storageReference;
     private static final int IMAGE_REQUEST = 1;
@@ -60,6 +66,24 @@ public class ProfileFragment extends Fragment {
 
         image_Profile = view.findViewById(R.id.profile_image);
         name = view.findViewById(R.id.name);
+        courseDropDown = (Spinner) view.findViewById(R.id.spinner_major);
+        //Configure and display Drop Down Menu for Diploma Course Selection In Registration
+        ArrayAdapter<String> course_Adaptor = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.courses));
+        course_Adaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        courseDropDown.setAdapter(course_Adaptor);
+        courseDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = courseDropDown.getSelectedItem().toString();
+                GlobalVar.setData(text);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         fbUser = FirebaseAuth.getInstance().getCurrentUser();
