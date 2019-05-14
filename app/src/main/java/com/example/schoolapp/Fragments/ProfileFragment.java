@@ -67,15 +67,19 @@ public class ProfileFragment extends Fragment {
 
         dbReference.addValueEventListener(new ValueEventListener() {
             @Override
+            //Loads the images if the fragment is currently added to its activity.
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                name.setText(user.getName());
-                if(user.getImageURL().equals("default")){
-                    image_Profile.setImageResource((R.mipmap.ic_launcher));
-                }else{
-                    //Glide.with(getContext()).load(user.getImageURL()).into(image_Profile);
-                    Glide.with(getActivity().getApplicationContext()).load(user.getImageURL()).into(image_Profile);
+                if(isAdded()){
+                    User user = dataSnapshot.getValue(User.class);
+                    name.setText(user.getName());
+                    if(user.getImageURL().equals("default")){
+                        image_Profile.setImageResource((R.mipmap.ic_launcher));
+                    }else{
+                        Glide.with(getContext()).load(user.getImageURL()).into(image_Profile);
+                        //Glide.with(getActivity().getApplicationContext()).load(user.getImageURL()).into(image_Profile);
+                    }
                 }
+
             }
 
             @Override

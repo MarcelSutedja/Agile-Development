@@ -41,11 +41,11 @@ public class ChatFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        fbUser = FirebaseAuth.getInstance().getCurrentUser();
+        fbUser = FirebaseAuth.getInstance().getCurrentUser();                   //Get the current Logged in User
 
         usersList = new ArrayList<>();
-        dbReference = FirebaseDatabase.getInstance().getReference("Chats");
-        dbReference.addValueEventListener(new ValueEventListener() {
+        dbReference = FirebaseDatabase.getInstance().getReference("Chats"); //Get an instance of "Chats" in the database and access it to read and write
+        dbReference.addValueEventListener(new ValueEventListener() {            //Monitor data Changes in "Chats
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usersList.clear();

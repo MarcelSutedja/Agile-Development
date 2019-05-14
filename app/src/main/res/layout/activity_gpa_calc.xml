@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/buttonCalc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Calculate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextCourseWorkGrade1" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/edit_text_background"
+        android:gravity="center"
+        android:text="Results"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCalc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSave" />
+
+    <TextView
+        android:id="@+id/textViewModule1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="left"
+        android:text="Module 1"
+        android:textColor="#000000"
+        android:textSize="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewModuleCredit1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="left"
+        android:text="Credit:"
+        android:textColor="#000000"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toStartOf="@+id/editTextModuleCredit1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewModule1" />
+
+    <TextView
+        android:id="@+id/textViewGrade1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="left"
+        android:text="Exam Mark :"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/editTextGrade1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPercentage1" />
+
+    <TextView
+        android:id="@+id/textViewCourseWorkGrade1"
+        android:layout_width="188dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="left"
+        android:text="Coursework Mark :"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toStartOf="@+id/editTextCourseWorkGrade1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGrade1" />
+
+    <TextView
+        android:id="@+id/textViewPercentage1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="left"
+        android:text="Exam (% ) :"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/editTextPercentage1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewModuleCredit1" />
+
+
+    <EditText
+        android:id="@+id/editTextModuleCredit1"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:textColor="#000000"
+        android:background="@drawable/edit_text_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewModule1" />
+
+    <EditText
+        android:id="@+id/editTextGrade1"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/edit_text_background"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPercentage1" />
+
+
+    <EditText
+        android:id="@+id/editTextPercentage1"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/edit_text_background"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextModuleCredit1" />
+
+
+    <EditText
+        android:id="@+id/editTextCourseWorkGrade1"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/edit_text_background"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextGrade1" />
+
+
+
+</android.support.constraint.ConstraintLayout>

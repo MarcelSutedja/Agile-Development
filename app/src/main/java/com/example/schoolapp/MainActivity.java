@@ -123,6 +123,11 @@ public class MainActivity extends AppCompatActivity {
                                 }).show();
         }//End of Logout
             return true;
+            case R.id.gpa_calc:{
+                startActivity(new Intent(MainActivity.this, GpaCalcActivity.class));
+
+            }
+            return true;
         }
         return false;
     }
