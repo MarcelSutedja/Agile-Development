@@ -63,7 +63,7 @@ public class ProfileFragment extends Fragment {
         image_Profile = view.findViewById(R.id.profile_image);
         name = view.findViewById(R.id.name);
         major = view.findViewById(R.id.major);
-        major.setText(GlobalVar.getData());
+        major.setText(GlobalVar.getMajor());
 
 
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
@@ -84,7 +84,6 @@ public class ProfileFragment extends Fragment {
                         //Glide.with(getActivity().getApplicationContext()).load(user.getImageURL()).into(image_Profile);
                     }
                 }
-
             }
 
             @Override

@@ -1,5 +1,7 @@
 package com.example.schoolapp.Body;
 
+
+//Create an Unique object that stores the relevant information from the Firebase Database
 public class User {
 
     private String id;

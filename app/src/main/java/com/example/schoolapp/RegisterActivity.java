@@ -102,7 +102,8 @@ public class RegisterActivity extends AppCompatActivity {
                     FirebaseUser firebaseUser = auth.getCurrentUser();
                     assert firebaseUser!=null;
                     String userId = firebaseUser.getUid();
-
+                    GlobalVar.setMajor(timetable);                  //Set timeTable to be shown in Profile Fragment
+                    String timeTableURL = getTimeTableURL(timetable);
                     reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
 
                     HashMap<String, String> hashMap = new HashMap<>();
@@ -111,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
                     hashMap.put("imageURL", "default");
                     hashMap.put("currentStatus","Offline");
                     hashMap.put("search",name.toLowerCase());
-                    hashMap.put("timetable", timetable);
+                    hashMap.put("timetable", timeTableURL);
 
                     reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -128,5 +129,28 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    private String getTimeTableURL(String timetable){
+        switch (GlobalVar.getData()) {
+
+            case ("Bachelor of Arts with Honours in Accounting and Finance"): {
+                GlobalVar.setMajor(timetable);
+               return "https://firebasestorage.googleapis.com/v0/b/school-app-ff4d3.appspot.com/o/uploads%2Facctandfinanc.jpg?alt=media&token=9bfe0408-4f9b-43a7-9a05-91034b833593";
+            }
+            case ("Bachelor of Arts with Honours in Business and Marketing"): {
+                GlobalVar.setMajor(timetable);
+                return "https://firebasestorage.googleapis.com/v0/b/school-app-ff4d3.appspot.com/o/uploads%2Fbznmarket.jpg?alt=media&token=a8d5898c-1fb8-44d0-88cd-ee8172c75347";
+            }
+            case ("Bachelor of Engineering with Honours in Mechanical Engineering"): {
+                GlobalVar.setMajor(timetable);
+                return "https://firebasestorage.googleapis.com/v0/b/school-app-ff4d3.appspot.com/o/uploads%2Fmecheng.jpg?alt=media&token=23d6ad91-71d3-4986-a067-aaed679757fb";
+            }
+            case ("Bachelor of Science with Honours in Global Logistics (Top-up)"): {
+
+                return "https://firebasestorage.googleapis.com/v0/b/school-app-ff4d3.appspot.com/o/uploads%2Fgloballogs.jpg?alt=media&token=ac87c514-c1ff-4f6e-9f71-7ae9af9ee502";
+            }
+            default:
+               return "~";
+        }
     }
 }

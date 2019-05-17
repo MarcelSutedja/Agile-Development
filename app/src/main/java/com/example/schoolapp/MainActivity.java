@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+                User user = dataSnapshot.getValue(User.class);          //Store data in Firebase Database as Object
                 name.setText(user.getName());
                 GlobalVar.setData(user.getTimetable());
                 if (user.getImageURL().equals("default")){
