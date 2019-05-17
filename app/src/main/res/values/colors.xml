@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#49BDB1</color>
+    <color name="colorPrimaryDark">#1B3BAD</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="borderColor">#16C5CE</color>
+    <color name="chatRight">#16F24F</color>
+    <color name="resultButton">#FFEB3B</color>
+</resources>
