@@ -10,4 +10,10 @@
         <item>Bachelor of Engineering with Honours in Mechanical Engineering</item>
         <item>Bachelor of Science with Honours in Global Logistics (Top-up)</item>
     </string-array>
+
+    <string-array name="modules">
+        <item>PADS</item>
+        <item>OSSN</item>
+        <item>OSD</item>
+    </string-array>
 </resources>

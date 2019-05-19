@@ -5,14 +5,21 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
-import java.util.ArrayList;
+import android.widget.Toast;
 
-public class GpaCalcActivity extends AppCompatActivity {
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+public class GpaCalcActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     public TextView result;         //Located in activity_gpa.xml, as a giant text view used to show result
-    public TextView module;         //Located in activity_gpa.xml, shown at the top, representing the current module
+
+    public Spinner module;         //Located in activity_gpa.xml, shown at the top, representing the current module
 
     public Button buttonCalc;       //Located at the bottom of activity_gpa.xml: reset all EditText and Module to Module 1
     public Button buttonSave;       //Located before the result box in activity_gpa.xml: total the current value and increase the module counter (Module 1 -> Module 2)
@@ -26,8 +33,9 @@ public class GpaCalcActivity extends AppCompatActivity {
     public EditText creditModule;   //Input Type: decimals for credit module (in multiples of 10)
 
     int counter =1;                 //Counter for Module TextView (Module (counter) -> Module (1)) to show module save state
-
-    ArrayList moduleData = new ArrayList();
+    String moduleId;
+    DatabaseReference databaseModuleData;
+//    ArrayList moduleData = new ArrayList();
 
     private static final String LOG_TAG = "MainActivity";
 
@@ -35,8 +43,17 @@ public class GpaCalcActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gpa_calc);
+
+        Toast.makeText(GpaCalcActivity.this, "Firebase connection success", Toast.LENGTH_LONG).show();
+
+        databaseModuleData = FirebaseDatabase.getInstance().getReference("ModuleData");
+
         result = (TextView) findViewById(R.id.result);          //result: id for TextView with big box
-        module = (TextView) findViewById(R.id.textViewModule1); //textViewModule1: top of the page
+        module = (Spinner) findViewById(R.id.spinnerModule1); //textViewModule1: top of the page
+        ArrayAdapter<CharSequence> moduleAdapter = ArrayAdapter.createFromResource(this,R.array.modules,R.layout.spinner_item);
+        moduleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        module.setAdapter(moduleAdapter);
+        module.setOnItemSelectedListener(this);
 
         buttonSave = (Button) findViewById(R.id.buttonSave);    //initialize "save" button
         buttonCalc = (Button) findViewById(R.id.buttonCalc);    //initialize "calculate" button
@@ -77,16 +94,15 @@ public class GpaCalcActivity extends AppCompatActivity {
                         creditAlert();
                     }
                     else {
-                        storeIntoArrayList(moduleData,counter,dExamGrade,dCwGrade,dExamPercentage,dCreditModule);
-
+//                        storeIntoArrayList(moduleData,counter,dExamGrade,dCwGrade,dExamPercentage,dCreditModule);
+                        addModuleData();
                         double tempMark = calcMark(dExamGrade, dCwGrade, dExamPercentage, dCreditModule); //mark calculation
                         totalMark+=tempMark;                //Sum temporary mark into total mark
                         totalCredit+=(dCreditModule/10.0);  //Sum the credit module into the total module
 
                         clearEditText();                    //Clear all the fields (set all EditText into "")
                         counter++;                          //Example: Module (counter=1) -> Module (counter=2)
-                        module.setText("Module " + String.valueOf(counter));              //Module 1-> Module 2 (Example)
-                        result.setText("Saved:" + " Module "+ String.valueOf(counter-1)); //Show user that their progress is saved
+                        result.setText("Saved:" + " Module "+ String.valueOf(totalMark)); //Show user that their progress is saved
                     }
                 }
             }
@@ -128,14 +144,12 @@ public class GpaCalcActivity extends AppCompatActivity {
                     else {
 
                         double tempMark = calcMark(dExamGrade, dCwGrade, dExamPercentage, dCreditModule); //mark calculation
-                        storeIntoArrayList(moduleData,counter,dExamGrade,dCwGrade,dExamPercentage,dCreditModule);
+//                        storeIntoArrayList(moduleData,counter,dExamGrade,dCwGrade,dExamPercentage,dCreditModule);
 
                         totalMark+=tempMark;                //Sum temporary mark into total mark
                         totalCredit+=(dCreditModule/10.0);  //Sum the credit module into the total module
 
                         clearEditText();
-                        counter =1;
-                        module.setText("Module "+String.valueOf(counter));
 
                         double finalResult = totalMark/totalCredit; //Final calculation
                         //Reseting all value to 0
@@ -203,15 +217,15 @@ public class GpaCalcActivity extends AppCompatActivity {
         creditModule.getText().clear();
     }
 
-    public void storeIntoArrayList(ArrayList arrayList,int counter, double examGrade, double cwGrade, double examPercentage, double creditModule){
-        ArrayList tempList = new ArrayList();
-        tempList.add(counter);
-        tempList.add(examGrade);
-        tempList.add(cwGrade);
-        tempList.add(examPercentage);
-        tempList.add(creditModule);
-        moduleData.add(tempList);
-    }
+//    public void storeIntoArrayList(ArrayList arrayList,int counter, double examGrade, double cwGrade, double examPercentage, double creditModule){
+//        ArrayList tempList = new ArrayList();
+//        tempList.add(counter);
+//        tempList.add(examGrade);
+//        tempList.add(cwGrade);
+//        tempList.add(examPercentage);
+//        tempList.add(creditModule);
+//        moduleData.add(tempList);
+//    }
 
     public void creditAlert(){
         AlertDialog.Builder y = new AlertDialog.Builder(GpaCalcActivity.this);
@@ -226,6 +240,30 @@ public class GpaCalcActivity extends AppCompatActivity {
         });
         AlertDialog alert = y.create();
         alert.show();
+    }
+
+    private void addModuleData(){
+        double dExamGrade = Double.parseDouble(examGrade.getText().toString());
+        double dCwGrade = Double.parseDouble(cwGrade.getText().toString());
+        double dExamPercentage = Double.parseDouble(examPercentage.getText().toString());
+        double dCreditModule = Double.parseDouble(creditModule.getText().toString());
+
+        ModuleData moduleData = new ModuleData(dExamGrade,dCwGrade,dExamPercentage,dCreditModule,moduleId);
+
+        databaseModuleData.child(moduleId).setValue(moduleData);
+
+        Toast.makeText(this,"Module Data added",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        moduleId = parent.getItemAtPosition(position).toString();
+        Toast.makeText(this,moduleId,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
 

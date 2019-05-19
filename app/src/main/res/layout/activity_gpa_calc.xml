@@ -54,17 +54,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonSave" />
 
-    <TextView
-        android:id="@+id/textViewModule1"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/spinnerModule1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:gravity="left"
         android:text="Module 1"
         android:textColor="#000000"
-        android:textSize="36dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -73,7 +74,7 @@
         android:id="@+id/textViewModuleCredit1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:gravity="left"
         android:text="Credit:"
@@ -81,7 +82,7 @@
         android:textSize="25dp"
         app:layout_constraintEnd_toStartOf="@+id/editTextModuleCredit1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewModule1" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerModule1" />
 
     <TextView
         android:id="@+id/textViewGrade1"
@@ -130,15 +131,15 @@
         android:id="@+id/editTextModuleCredit1"
         android:layout_width="0dp"
         android:layout_height="43dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/edit_text_background"
         android:ems="10"
         android:gravity="center"
         android:inputType="numberDecimal"
         android:textColor="#000000"
-        android:background="@drawable/edit_text_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewModule1" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerModule1" />
 
     <EditText
         android:id="@+id/editTextGrade1"

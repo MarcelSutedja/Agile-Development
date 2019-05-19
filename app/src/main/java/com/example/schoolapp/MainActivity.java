@@ -133,6 +133,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, TimeTableActivity.class));
             }
             return true;
+            case R.id.module_data:{
+                startActivity(new Intent(MainActivity.this, ModuleDataHistoryList.class));
+            }
+            return true;
         }
         return false;
     }
