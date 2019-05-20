@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.schoolapp.Adaptor.ModuleDataList;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,11 +25,15 @@ public class ModuleDataHistoryList extends AppCompatActivity {
     List<ModuleData> moduleDataList;
     DatabaseReference databaseModuleData;
 
+    FirebaseAuth auth;
+    FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_data_history);
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         listViewModuleData = (ListView) findViewById(R.id.listViewModuleDataList);
         databaseModuleData = FirebaseDatabase.getInstance().getReference("ModuleData");
@@ -39,7 +45,7 @@ public class ModuleDataHistoryList extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        databaseModuleData.addValueEventListener(new ValueEventListener() {
+        databaseModuleData.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
