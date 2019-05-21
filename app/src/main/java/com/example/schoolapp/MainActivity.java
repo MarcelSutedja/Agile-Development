@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
+        //Create New Fragments
         viewPagerAdapter.addFragment(new ChatFragment(),"Chats");
         viewPagerAdapter.addFragment(new UserFragment(),"Users");
         viewPagerAdapter.addFragment(new ProfileFragment(),"Profile");
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
     }
-
+    //Initialise Menu(...) at the top right corner
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the dotdotdot; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.dotdotdot, menu);

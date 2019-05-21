@@ -78,12 +78,13 @@ public class MessageActivity extends AppCompatActivity {
         final String userid = intent.getStringExtra("userid");
         fbUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        //Set what happens when you press the send button(Green Arrow)
         btn_Send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = text_Send.getText().toString();
+                String message = text_Send.getText().toString();        //Collect sent message as String
                 if (!message.equals("")){
-                    sendMessage(fbUser.getUid(), userid, message);
+                    sendMessage(fbUser.getUid(), userid, message);      //Give String to method that uploads the message to the database
                 }else{
                     Toast emptyMessage = Toast.makeText(MessageActivity.this, "There is nothing to send", Toast.LENGTH_LONG);
                     emptyMessage.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 1250);
@@ -137,6 +138,7 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
     }
+    //Send Message to Database along with the relevant information (Sender, Receiver, Actual Message, Seen status)
     private void sendMessage (String sender, final String receiver, String message){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 

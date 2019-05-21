@@ -53,12 +53,12 @@ public class RegisterActivity extends AppCompatActivity {
         register_Btn = findViewById(R.id.btn_Register);
 
         auth = FirebaseAuth.getInstance();
-        courseDropDown = (Spinner) findViewById(R.id.spinner_major);
+        courseDropDown = (Spinner) findViewById(R.id.spinner_major);        //Configure Drop-down Box
         //Configure and display Drop Down Menu for Diploma Course Selection In Registration
         ArrayAdapter<String> course_Adaptor = new ArrayAdapter<String>(RegisterActivity.this,android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.courses));
         course_Adaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         courseDropDown.setAdapter(course_Adaptor);
-        //Collect Selected Course as string
+        //Collect Selected Course in dropdown box as string
         courseDropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -72,11 +72,11 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-
+        //Set what happens when register button is pressed
         register_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txt_name = name.getText().toString();
+                String txt_name = name.getText().toString();            //Collect input Name as String
                 String txt_email = email.getText().toString();
                 String txt_password = password.getText().toString();
                 //If any fields are empty, show message that says "all fields are required" at the center of the screen
@@ -131,6 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+    //Image URL is returned based on the corresponding String
     private String getTimeTableURL(String timetable){
         switch (GlobalVar.getData()) {
 

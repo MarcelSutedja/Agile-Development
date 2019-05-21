@@ -40,14 +40,14 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         btn_Login = findViewById(R.id.btn_Login);
-
+        //Once the Login button is pressed
         btn_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txt_email = email.getText().toString();
-                String txt_password = password.getText().toString();
+                String txt_email = email.getText().toString();          //Collect Email that is inputted by user
+                String txt_password = password.getText().toString();   //Collect Password that is inputted by user
                 //If any fields are empty, show message that says "all fields are required" at the center of the screen
-                if(TextUtils.isEmpty(txt_email)||TextUtils.isEmpty(txt_password)) {
+                if(TextUtils.isEmpty(txt_email)||TextUtils.isEmpty(txt_password)) { //Set up what happens when nothing is inputted to email and password
                     Toast emptyFields = Toast.makeText(LoginActivity.this,"All fields are required", Toast.LENGTH_LONG);
                     emptyFields.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 1250);
                     emptyFields.show();
@@ -57,11 +57,11 @@ public class LoginActivity extends AppCompatActivity {
                     auth.signInWithEmailAndPassword(txt_email,txt_password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
+                            if (task.isSuccessful()){               //If login authentication is successful
                                 //showProgressDialogLogin();
                                 Intent loginIntent = new Intent (LoginActivity.this, MainActivity.class);
                                 //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(loginIntent);
+                                startActivity(loginIntent);         //Go to Main Activity
                                 finish();
                             }else{
                                 Toast failedAuth = Toast.makeText(LoginActivity.this,"Failed Authentication", Toast.LENGTH_LONG);
