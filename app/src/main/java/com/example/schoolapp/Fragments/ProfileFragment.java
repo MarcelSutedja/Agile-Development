@@ -64,7 +64,7 @@ public class ProfileFragment extends Fragment {
         name = view.findViewById(R.id.name);
         major = view.findViewById(R.id.major);
         major.setText(GlobalVar.getData());
-
+        Toast.makeText(getContext(),"Get data:" +GlobalVar.getData(),Toast.LENGTH_LONG).show();
 
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         fbUser = FirebaseAuth.getInstance().getCurrentUser();

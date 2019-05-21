@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 name.setText(user.getName());
-                GlobalVar.setData(user.getTimetable());
                 if (user.getImageURL().equals("default")){
                     profile_Image.setImageResource(R.mipmap.ic_launcher);
                 }else{
