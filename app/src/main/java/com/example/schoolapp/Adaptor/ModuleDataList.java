@@ -8,10 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.schoolapp.ModuleData;
+import com.example.schoolapp.Extra.ModuleData;
 import com.example.schoolapp.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -40,12 +38,13 @@ public class ModuleDataList extends ArrayAdapter<ModuleData> {
         TextView textViewCourseWorkGrade = (TextView) listViewItem.findViewById(R.id.textViewCourseWorkGrade);
         TextView textViewExamPercentage = (TextView) listViewItem.findViewById(R.id.textViewExamPercentage);
         TextView textViewModuleCredit = (TextView) listViewItem.findViewById(R.id.textViewModuleCredit);
-
+        TextView textViewMark = (TextView) listViewItem.findViewById(R.id.textViewMark);
         textViewModuleName.setText(moduleData.getModuleName());
         textViewExamGrade.setText("Exam Grade                 :   "+String.valueOf(moduleData.getExamGrade()));
         textViewCourseWorkGrade.setText("Coursework Grade      :   " + String.valueOf(moduleData.getCwGrade()));
         textViewExamPercentage.setText("Exam %                         :   " +String.valueOf(moduleData.getExamPercentage()));
         textViewModuleCredit.setText("Module Credit              :   " + String.valueOf(moduleData.getCreditModule()));
+        textViewMark.setText("Mark                              :  "+String.valueOf(moduleData.getFinalMark()));
 
         return listViewItem;
     }

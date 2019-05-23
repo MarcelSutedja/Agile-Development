@@ -1,13 +1,12 @@
 package com.example.schoolapp;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.schoolapp.Adaptor.ModuleDataList;
+import com.example.schoolapp.Extra.ModuleData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,8 +24,12 @@ public class ModuleDataHistoryList extends AppCompatActivity {
     List<ModuleData> moduleDataList;
     DatabaseReference databaseModuleData;
 
+
+
     FirebaseAuth auth;
     FirebaseUser firebaseUser;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +51,21 @@ public class ModuleDataHistoryList extends AppCompatActivity {
         databaseModuleData.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                double total =0;
+                double credit=0;
                 moduleDataList.clear();
 
                 for(DataSnapshot moduleDataSnapshot: dataSnapshot.getChildren()){
                     ModuleData moduleData = moduleDataSnapshot.getValue(ModuleData.class);
-
+                    total+=moduleData.getFinalMark();
+                    credit+=moduleData.getCreditModule()/10.0;
                     moduleDataList.add(moduleData);
                 }
                 ModuleDataList listAdapter = new ModuleDataList(ModuleDataHistoryList.this,moduleDataList);
                 listViewModuleData.setAdapter(listAdapter);
+                double finalMark = total/credit;
+                TextView textViewMark = (TextView) findViewById(R.id.textViewModuleDataMark);
+                textViewMark.setText("TOTAL MARK   : "+String.format("%.2f",finalMark));
             }
 
             @Override
@@ -65,5 +73,9 @@ public class ModuleDataHistoryList extends AppCompatActivity {
 
             }
         });
+    }
+    public double calcMark(double examGrade, double cwGrade, double examPercentage, double creditModule){
+        double calculatedMark = ((examGrade*examPercentage/100.0) + (cwGrade*(100-examPercentage)/100.0))*creditModule/10.0;
+        return calculatedMark;
     }
 }

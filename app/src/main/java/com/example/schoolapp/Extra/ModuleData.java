@@ -1,4 +1,4 @@
-package com.example.schoolapp;
+package com.example.schoolapp.Extra;
 
 public class ModuleData {
     double examGrade;
@@ -6,16 +6,18 @@ public class ModuleData {
     double examPercentage;
     double creditModule;
     String moduleName;
+    double finalMark;
     public ModuleData(){
 
     }
 
-    public ModuleData(double examGrade, double cwGrade, double examPercentage, double creditModule, String moduleName) {
+    public ModuleData(double examGrade, double cwGrade, double examPercentage, double creditModule, String moduleName,double finalMark) {
         this.examGrade = examGrade;
         this.cwGrade = cwGrade;
         this.examPercentage = examPercentage;
         this.creditModule = creditModule;
         this.moduleName = moduleName;
+        this.finalMark = finalMark;
     }
 
     public double getExamGrade() {
@@ -36,5 +38,9 @@ public class ModuleData {
 
     public String getModuleName() {
         return moduleName;
+    }
+
+    public double getFinalMark() {
+        return finalMark;
     }
 }

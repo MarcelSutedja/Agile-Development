@@ -14,6 +14,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.schoolapp.Extra.GlobalVar;
+import com.example.schoolapp.Extra.ModuleData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,19 +32,20 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
     public Button buttonCalc;       //Located at the bottom of activity_gpa.xml: reset all EditText and Module to Module 1
     public Button buttonSave;       //Located before the result box in activity_gpa.xml: total the current value and increase the module counter (Module 1 -> Module 2)
 
-    double totalMark=0;             //Variable to store the total value
-    double totalCredit=0;           //Variable to store the Total sum of credits
+    double totalMark = 0;             //Variable to store the total value
+    double totalCredit = 0;           //Variable to store the Total sum of credits
 
     public EditText examGrade;      //Input Type: decimals for examMarks
     public EditText cwGrade;        //Input Type: decimals for courseworkMarks
     public EditText examPercentage; //Input Type: decimals for exam percentage (weight)
     public EditText creditModule;   //Input Type: decimals for credit module (in multiples of 10)
 
-    int counter =1;                 //Counter for Module TextView (Module (counter) -> Module (1)) to show module save state
+    int counter = 1;                 //Counter for Module TextView (Module (counter) -> Module (1)) to show module save state
 
     String moduleId;
 
     DatabaseReference databaseModuleData;
+    DatabaseReference childRef;
 
     FirebaseAuth auth;
     FirebaseUser firebaseUser;
@@ -61,7 +64,9 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
 
         result = (TextView) findViewById(R.id.result);          //result: id for TextView with big box
         module = (Spinner) findViewById(R.id.spinnerModule1); //textViewModule1: top of the page
-        ArrayAdapter<CharSequence> moduleAdapter = ArrayAdapter.createFromResource(this,R.array.modules,R.layout.spinner_item);
+
+
+        ArrayAdapter<CharSequence> moduleAdapter = ArrayAdapter.createFromResource(this, getModuleArray(), R.layout.spinner_item);
         moduleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         module.setAdapter(moduleAdapter);
         module.setOnItemSelectedListener(this);
@@ -94,24 +99,20 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
                 result.setText(String.valueOf((sExamGrade.matches("") || sCwGrade.matches("") || sExamPercentage.matches("") || sCreditModule.matches(""))));
                 if (sExamGrade.matches("") || sCwGrade.matches("") || sExamPercentage.matches("") || sCreditModule.matches("")) {
                     checkNull(true);
-                }
-                else{
-                    dExamGrade=Double.parseDouble(sExamGrade);
-                    dCwGrade=Double.parseDouble(sCwGrade);
-                    dExamPercentage=Double.parseDouble(sExamPercentage);
+                } else {
+                    dExamGrade = Double.parseDouble(sExamGrade);
+                    dCwGrade = Double.parseDouble(sCwGrade);
+                    dExamPercentage = Double.parseDouble(sExamPercentage);
                     dCreditModule = Double.parseDouble(sCreditModule);
 
-                    if(dCreditModule%10!=0||!(dCreditModule<=30&&dCreditModule>=10)||!(dCwGrade<=100&&dCwGrade>=0)||!(dExamGrade<=100&&dExamGrade>=0)||!(dExamPercentage<=100&&dExamPercentage>=0)){
+                    if (dCreditModule % 10 != 0 || !(dCreditModule <= 30 && dCreditModule >= 10) || !(dCwGrade <= 100 && dCwGrade >= 0) || !(dExamGrade <= 100 && dExamGrade >= 0) || !(dExamPercentage <= 100 && dExamPercentage >= 0)) {
                         creditAlert();
-                    }
-                    else {
-//                        storeIntoArrayList(moduleData,counter,dExamGrade,dCwGrade,dExamPercentage,dCreditModule);
+                    } else {
                         addModuleData();
                         double tempMark = calcMark(dExamGrade, dCwGrade, dExamPercentage, dCreditModule); //mark calculation
-                        totalMark+=tempMark;                //Sum temporary mark into total mark
-                        totalCredit+=(dCreditModule/10.0);  //Sum the credit module into the total module
+                        totalMark += tempMark;                //Sum temporary mark into total mark
+                        totalCredit += (dCreditModule / 10.0);  //Sum the credit module into the total module
 
-                        clearEditText();                    //Clear all the fields (set all EditText into "")
                         result.setText("Saved:" + moduleId); //Show user that their progress is saved
                     }
                 }
@@ -125,13 +126,12 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
         buttonCalc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(totalMark==0||totalCredit==0){
-                    Toast.makeText(GpaCalcActivity.this,"There are no mark to be calculated",Toast.LENGTH_LONG).show();
-                }
-                else{
-                    double finalmark = totalMark/totalCredit;
+                if (totalMark == 0 || totalCredit == 0) {
+                    Toast.makeText(GpaCalcActivity.this, "There are no mark to be calculated", Toast.LENGTH_LONG).show();
+                } else {
+                    double finalmark = totalMark / totalCredit;
                     String finalMark = String.valueOf(finalmark);
-                    result.setText(getResult(finalmark)+"\nFinal Mark: "+finalMark);
+                    result.setText(getResult(finalmark) + "\nFinal Mark: " + finalMark);
                 }
             }
         });
@@ -144,9 +144,9 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
         databaseModuleData.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                totalMark=0;
-                totalCredit=0;
-                for(DataSnapshot moduleDataSnapshot: dataSnapshot.getChildren()){
+                totalMark = 0;
+                totalCredit = 0;
+                for (DataSnapshot moduleDataSnapshot : dataSnapshot.getChildren()) {
 
                     ModuleData moduleData = moduleDataSnapshot.getValue(ModuleData.class);
                     double tempExamGrade = moduleData.getExamGrade();
@@ -154,9 +154,9 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
                     double tempExamPercentage = moduleData.getExamPercentage();
                     double tempCreditModule = moduleData.getCreditModule();
 
-                    double tempMark = calcMark(tempExamGrade,tempCwGrade,tempExamPercentage,tempCreditModule);
-                    totalMark+=tempMark;
-                    totalCredit+=(tempCreditModule/10.0);
+                    double tempMark = calcMark(tempExamGrade, tempCwGrade, tempExamPercentage, tempCreditModule);
+                    totalMark += tempMark;
+                    totalCredit += (tempCreditModule / 10.0);
                 }
             }
 
@@ -168,30 +168,31 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
     }
 
     //Return grade based on finalResult
-    public String getResult(double finalResult){
+    public String getResult(double finalResult) {
         String sResult = "";
-        if(finalResult>=70){
+        if (finalResult >= 70) {
             sResult = "GPA - 4.0 (A)\n FIRST-CLASS HONOURS";
-        }else if(finalResult>=65&&finalResult<=69){
+        } else if (finalResult >= 65 && finalResult <= 69) {
             sResult = "GPA - 3.7 (B)\n UPPER SECOND-CLASS HONOURS";
-        }else if(finalResult>=60&&finalResult<=64){
+        } else if (finalResult >= 60 && finalResult <= 64) {
             sResult = "GPA - 3.3 (B)\n UPPER SECOND-CLASS HONOURS";
-        }else if(finalResult>=55&&finalResult<=59){
+        } else if (finalResult >= 55 && finalResult <= 59) {
             sResult = "GPA - 3 (C)\n LOWER SECOND-CLASS HONOURS";
-        }else if(finalResult>=50&&finalResult<=59){
+        } else if (finalResult >= 50 && finalResult <= 59) {
             sResult = "GPA - 2.7 (C)\n LOWER SECOND-CLASS HONOURS";
-        }else if(finalResult>=45&&finalResult<=49){
+        } else if (finalResult >= 45 && finalResult <= 49) {
             sResult = "GPA - 2.3 (D)\n ORDINARY/UNCLASSIFIED";
-        }else{
+        } else {
             sResult = "FAIL\nREMODULE";
         }
         return sResult;
     }
+
     //Null checker
     //If true prompt the alert dialog
     //If false do nothing
-    public void checkNull(boolean nullInput){
-        if (nullInput == true){
+    public void checkNull(boolean nullInput) {
+        if (nullInput == true) {
             AlertDialog.Builder x = new AlertDialog.Builder(GpaCalcActivity.this);
 
             x.setTitle("MISSING VALUE");
@@ -208,34 +209,24 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
     }
 
     //Mark calculation algorithm
-    public double calcMark(double examGrade, double cwGrade, double examPercentage, double creditModule){
-        double calculatedMark = ((examGrade*examPercentage/100.0) + (cwGrade*(100-examPercentage)/100.0))*creditModule/10.0;
+    public double calcMark(double examGrade, double cwGrade, double examPercentage, double creditModule) {
+        double calculatedMark = ((examGrade * examPercentage / 100.0) + (cwGrade * (100 - examPercentage) / 100.0)) * creditModule / 10.0;
         return calculatedMark;
     }
 
     //Clear(Reset) every field
-    public void clearEditText(){
+    public void clearEditText() {
         examGrade.getText().clear();
         cwGrade.getText().clear();
         examPercentage.getText().clear();
         creditModule.getText().clear();
     }
 
-//    public void storeIntoArrayList(ArrayList arrayList,int counter, double examGrade, double cwGrade, double examPercentage, double creditModule){
-//        ArrayList tempList = new ArrayList();
-//        tempList.add(counter);
-//        tempList.add(examGrade);
-//        tempList.add(cwGrade);
-//        tempList.add(examPercentage);
-//        tempList.add(creditModule);
-//        moduleData.add(tempList);
-//    }
-
-    public void creditAlert(){
+    public void creditAlert() {
         AlertDialog.Builder y = new AlertDialog.Builder(GpaCalcActivity.this);
 
         y.setTitle("INVALID VALUE");
-        y.setMessage("You have entered invalid value\nCredit must be 10 to 30 and divideable by 10\nPercentage, Exam grade, and coursework grade must be between 0-100");
+        y.setMessage("You have entered invalid value\n1.Credit value:10,20, or 30 and divideable by 10\n2.Percentage, Exam grade, and coursework grade must be between 0-100");
         y.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -246,13 +237,40 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
         alert.show();
     }
 
+    public static int getModuleArray() {
+        double ids = 0;
+        switch (GlobalVar.getData()) {
+
+            case ("Bachelor of Arts with Honours in Accounting and Finance"): {
+                return R.array.AFmodules;
+            }
+            case ("Bachelor of Arts with Honours in Business and Marketing"): {
+                return R.array.BZNmodules;
+            }
+            case ("Bachelor of Engineering with Honours in Mechanical Engineering"): {
+                return R.array.MECHENGmodules;
+            }
+            case ("Bachelor of Science with Honours in Computer Science"): {
+                return R.array.CSmodules;
+            }
+            default:
+                return -1;
+        }
+}
+
     private void addModuleData(){
         double dExamGrade = Double.parseDouble(examGrade.getText().toString());
         double dCwGrade = Double.parseDouble(cwGrade.getText().toString());
         double dExamPercentage = Double.parseDouble(examPercentage.getText().toString());
         double dCreditModule = Double.parseDouble(creditModule.getText().toString());
 
-        ModuleData moduleData = new ModuleData(dExamGrade,dCwGrade,dExamPercentage,dCreditModule,moduleId);
+        double tempMark = calcMark(dExamGrade,dCwGrade,dExamPercentage,dCreditModule);
+        double tempCredit = dCreditModule/10.0;
+        tempMark/=tempCredit;
+
+        Toast.makeText(GpaCalcActivity.this,String.valueOf(tempMark),Toast.LENGTH_LONG).show();
+
+        ModuleData moduleData = new ModuleData(dExamGrade,dCwGrade,dExamPercentage,dCreditModule,moduleId,tempMark);
 
 
         String userPath = firebaseUser.getUid() + "/" + moduleId;
@@ -264,7 +282,48 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         moduleId = parent.getItemAtPosition(position).toString();
-        Toast.makeText(this,moduleId,Toast.LENGTH_LONG).show();
+        Toast.makeText(GpaCalcActivity.this, moduleId, Toast.LENGTH_SHORT).show();
+        examGrade = (EditText) findViewById(R.id.editTextGrade1);
+        cwGrade = (EditText) findViewById(R.id.editTextCourseWorkGrade1);
+        examPercentage = (EditText) findViewById(R.id.editTextPercentage1);
+        creditModule = (EditText) findViewById(R.id.editTextModuleCredit1);
+        clearEditText();
+        try {
+            databaseModuleData.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot moduleDataSnapshot : dataSnapshot.getChildren()) {
+                                ModuleData moduleData = moduleDataSnapshot.getValue(ModuleData.class);
+                                String moduleName = moduleData.getModuleName();
+                                if (moduleName.equals(moduleId)&&moduleName!=null) {
+                                    double tempExamGrade = moduleData.getExamGrade();
+                                    double tempCwGrade = moduleData.getCwGrade();
+                                    double tempExamPercentage = moduleData.getExamPercentage();
+                                    double tempCreditModule = moduleData.getCreditModule();
+
+                                    examGrade = (EditText) findViewById(R.id.editTextGrade1);
+                                    cwGrade = (EditText) findViewById(R.id.editTextCourseWorkGrade1);
+                                    examPercentage = (EditText) findViewById(R.id.editTextPercentage1);
+                                    creditModule = (EditText) findViewById(R.id.editTextModuleCredit1);
+
+                                    creditModule.setText(String.valueOf(tempCreditModule));
+                                    examGrade.setText(String.valueOf(tempExamGrade));
+                                    cwGrade.setText(String.valueOf(tempCwGrade));
+                                    examPercentage.setText(String.valueOf(tempExamPercentage));
+                                }
+
+                        }
+                    }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+        }
+        catch (NullPointerException e) {
+            Toast.makeText(GpaCalcActivity.this, "The database is empty", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

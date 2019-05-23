@@ -8,10 +8,28 @@
         <item>Bachelor of Arts with Honours in Accounting and Finance</item>
         <item>Bachelor of Arts with Honours in Business and Marketing</item>
         <item>Bachelor of Engineering with Honours in Mechanical Engineering</item>
-        <item>Bachelor of Science with Honours in Global Logistics (Top-up)</item>
+        <item>Bachelor of Science with Honours in Computer Science</item>
     </string-array>
 
-    <string-array name="modules">
+    <string-array name="AFmodules">
+        <item>PAC</item>
+        <item>PIF</item>
+        <item>LEC</item>
+    </string-array>
+
+    <string-array name="BZNmodules">
+        <item>MB</item>
+        <item>MM</item>
+        <item>ECS2</item>
+    </string-array>
+
+    <string-array name="MECHENGmodules">
+        <item>MPI</item>
+        <item>PDM</item>
+        <item>FEA</item>
+    </string-array>
+
+    <string-array name="CSmodules">
         <item>PADS</item>
         <item>OSSN</item>
         <item>OSD</item>

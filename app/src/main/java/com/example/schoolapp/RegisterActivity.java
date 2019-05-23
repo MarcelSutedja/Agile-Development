@@ -147,9 +147,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                 return "https://firebasestorage.googleapis.com/v0/b/agiledev3.appspot.com/o/mecheng.png?alt=media&token=759b2715-f396-4697-b49b-8371307aa334";
             }
-            case ("Bachelor of Science with Honours in Global Logistics (Top-up)"): {
+            case ("Bachelor of Science with Honours in Computer Science"): {
 
-                return "https://firebasestorage.googleapis.com/v0/b/agiledev3.appspot.com/o/globallogs.png?alt=media&token=1a5541b9-c022-4753-af2a-1526404eef3f";
+                return "https://firebasestorage.googleapis.com/v0/b/agiledev3.appspot.com/o/cs.jpeg?alt=media&token=ec553057-c0c2-4dbe-8bdb-b726a74b621e";
             }
             default:
                 return "~";
