@@ -114,6 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
                     hashMap.put("currentStatus","Offline");
                     hashMap.put("search",name.toLowerCase());
                     hashMap.put("timetable", timeTableURL);
+                    hashMap.put("module", GlobalVar.getData());
 
                     reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

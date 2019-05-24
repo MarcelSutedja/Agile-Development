@@ -238,7 +238,6 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public static int getModuleArray() {
-        double ids = 0;
         switch (GlobalVar.getData()) {
 
             case ("Bachelor of Arts with Honours in Accounting and Finance"): {

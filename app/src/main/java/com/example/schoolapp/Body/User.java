@@ -8,6 +8,7 @@ public class User {
     private String currentStatus;
     private String search;
     private String timetable;
+    private String module;
 
     public User(String id, String name, String imageURL, String currentStatus, String search, String timetable){
         this.id = id;
@@ -16,6 +17,14 @@ public class User {
         this.currentStatus = currentStatus;
         this.search = search;
         this.timetable = timetable;
+    }
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
     }
 
     public String getTimetable() {

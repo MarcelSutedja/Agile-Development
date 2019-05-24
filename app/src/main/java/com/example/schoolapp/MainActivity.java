@@ -63,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+                User user = dataSnapshot.getValue(User.class);                      //Store database information as an object
+                GlobalVar.setData(user.getModule());
+                GlobalVar.setMajor(user.getTimetable());
                 name.setText(user.getName());
                 if (user.getImageURL().equals("default")){
                     profile_Image.setImageResource(R.mipmap.ic_launcher);
