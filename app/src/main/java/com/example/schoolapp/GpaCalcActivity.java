@@ -40,12 +40,9 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
     public EditText examPercentage; //Input Type: decimals for exam percentage (weight)
     public EditText creditModule;   //Input Type: decimals for credit module (in multiples of 10)
 
-    int counter = 1;                 //Counter for Module TextView (Module (counter) -> Module (1)) to show module save state
-
-    String moduleId;
+    String moduleId;                //Module ID: Currently selected module (eg. PADS, OSD, or OSSN)
 
     DatabaseReference databaseModuleData;
-    DatabaseReference childRef;
 
     FirebaseAuth auth;
     FirebaseUser firebaseUser;
@@ -57,15 +54,15 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gpa_calc);
 
-        Toast.makeText(GpaCalcActivity.this, "Firebase connection success", Toast.LENGTH_LONG).show();
-
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         databaseModuleData = FirebaseDatabase.getInstance().getReference("ModuleData");
 
         result = (TextView) findViewById(R.id.result);          //result: id for TextView with big box
-        module = (Spinner) findViewById(R.id.spinnerModule1); //textViewModule1: top of the page
+        module = (Spinner) findViewById(R.id.spinnerModule1);   //Drop down menu for modules (eg. PADS, OSD, OSSN)
 
-
+        //For spinner(drop down menu) customization
+        //Get the array
+        //spinner_item -> file that contains all the text attribute of the spinner item
         ArrayAdapter<CharSequence> moduleAdapter = ArrayAdapter.createFromResource(this, getModuleArray(), R.layout.spinner_item);
         moduleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         module.setAdapter(moduleAdapter);
@@ -120,9 +117,8 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
         });
 
         //"Calculate" button function
-        //Check if it contains any null value in any of the EditText (input box)
-        //If there is any empty field, prompt alert dialog
-        //If there is no empty field, perform mark calculation, show user that his final result, reset Module (counter) -> Module 1,and clear all fields
+        //If there is no total or credit value then prompt a toast message
+        //If there is no empty field, perform mark calculation, show user that his final result
         buttonCalc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,6 +218,7 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
         creditModule.getText().clear();
     }
 
+    //Alert box for wrong entry input
     public void creditAlert() {
         AlertDialog.Builder y = new AlertDialog.Builder(GpaCalcActivity.this);
 
@@ -236,10 +233,9 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
         AlertDialog alert = y.create();
         alert.show();
     }
-
+    //Retrieve the modules (PADS, OSD, OSSN) for the course enrolled
     public static int getModuleArray() {
         switch (GlobalVar.getData()) {
-
             case ("Bachelor of Arts with Honours in Accounting and Finance"): {
                 return R.array.AFmodules;
             }
@@ -256,7 +252,7 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
                 return -1;
         }
 }
-
+    //Function to add the all the entered data in EditText box to the object class ModuleData
     private void addModuleData(){
         double dExamGrade = Double.parseDouble(examGrade.getText().toString());
         double dCwGrade = Double.parseDouble(cwGrade.getText().toString());
@@ -267,31 +263,29 @@ public class GpaCalcActivity extends AppCompatActivity implements AdapterView.On
         double tempCredit = dCreditModule/10.0;
         tempMark/=tempCredit;
 
-        Toast.makeText(GpaCalcActivity.this,String.valueOf(tempMark),Toast.LENGTH_LONG).show();
 
         ModuleData moduleData = new ModuleData(dExamGrade,dCwGrade,dExamPercentage,dCreditModule,moduleId,tempMark);
 
 
         String userPath = firebaseUser.getUid() + "/" + moduleId;
         databaseModuleData.child(userPath).setValue(moduleData);
-
-        Toast.makeText(this,"Module Data added",Toast.LENGTH_LONG).show();
     }
-
+    //Function to show in the EditText value that user had entered
+    //If the user had not entered any value, leave the EditText box blank
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         moduleId = parent.getItemAtPosition(position).toString();
-        Toast.makeText(GpaCalcActivity.this, moduleId, Toast.LENGTH_SHORT).show();
         examGrade = (EditText) findViewById(R.id.editTextGrade1);
         cwGrade = (EditText) findViewById(R.id.editTextCourseWorkGrade1);
         examPercentage = (EditText) findViewById(R.id.editTextPercentage1);
         creditModule = (EditText) findViewById(R.id.editTextModuleCredit1);
-        clearEditText();
+        clearEditText();   //Clear the EditText box everytime the item change
         try {
             databaseModuleData.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                        //If the moduleId (the selected module) is the same as current moduleDataSnapshot (Eg. PADS == PADS)
+                        //Retrieve the value of current data snapshot and show it in the EditText box
                         for (DataSnapshot moduleDataSnapshot : dataSnapshot.getChildren()) {
                                 ModuleData moduleData = moduleDataSnapshot.getValue(ModuleData.class);
                                 String moduleName = moduleData.getModuleName();
