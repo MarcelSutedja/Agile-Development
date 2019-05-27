@@ -165,6 +165,21 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
+        final DatabaseReference receiverRef = FirebaseDatabase.getInstance().getReference("Chatlist")
+                .child(receiver).child(fbUser.getUid());
+        chatReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()){
+                    chatReference.child("id").setValue(fbUser.getUid());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
     private void readMessages(final String myid, final String userid, final String imageurl){
         mChat = new ArrayList<>();
@@ -196,7 +211,7 @@ public class MessageActivity extends AppCompatActivity {
         dbReference = FirebaseDatabase.getInstance().getReference("Users").child(fbUser.getUid());
 
         HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("Status", status);
+        hashMap.put("currentStatus", status);
 
         dbReference.updateChildren(hashMap);
     }
