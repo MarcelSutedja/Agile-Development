@@ -139,7 +139,7 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
     //Send Message to Database along with the relevant information (Sender, Receiver, Actual Message, Seen status)
-    private void sendMessage (String sender, final String receiver, String message){
+    private void sendMessage (final String sender, final String receiver, String message){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -171,7 +171,7 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.exists()){
-                    chatReference.child("id").setValue(fbUser.getUid());
+                    chatReference.child("id").setValue(sender);
                 }
             }
 
