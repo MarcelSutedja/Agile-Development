@@ -171,7 +171,7 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.exists()){
-                    chatReference.child("id").setValue(sender);
+                    chatReference.child("id").setValue(receiver);
                 }
             }
 
