@@ -57,7 +57,7 @@ public class ModuleDataHistoryList extends AppCompatActivity {
 
                 for(DataSnapshot moduleDataSnapshot: dataSnapshot.getChildren()){
                     ModuleData moduleData = moduleDataSnapshot.getValue(ModuleData.class); //Snapshot of module data (eg. PADS, OSD)
-                    total+=moduleData.getFinalMark();                                      //Get the mark and add it into total mark
+                    total+=calcMark(moduleData.getExamGrade(),moduleData.getCwGrade(),moduleData.getExamPercentage(),moduleData.getCreditModule());                                      //Get the mark and add it into total mark
                     credit+=moduleData.getCreditModule()/10.0;                             //Add the credit
                     moduleDataList.add(moduleData);                                        //Add the current module into moduleDataList for view
                 }
